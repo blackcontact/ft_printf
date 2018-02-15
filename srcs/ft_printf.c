@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/04 13:26:42 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 16:03:59 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 16:04:32 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -110,12 +110,6 @@ int				ft_printf(const char *format, ...)
 	output.size = 0;
 	output.output = ft_strnew(0);
 	printf("\n- Initial = |%s|\n", nav);
-	while (*nav)
-	{
-		write(1, &*nav, 1);
-		nav++;
-	}
-	nav = format
 	va_start(ap, format);
 	printf("%s", nav);
 	while (*nav)
