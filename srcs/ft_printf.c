@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/04 13:26:42 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 15:04:15 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 15:17:52 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -106,7 +106,6 @@ int				ft_printf(const char *format, ...)
 	t_output		output;
 	int				stop;
 
-	//printf("|%s|\n", nav);
 	stop = 0;
 	output.size = 0;
 	output.output = ft_strnew(0);
@@ -124,9 +123,10 @@ int				ft_printf(const char *format, ...)
 			ft_outputaddchar(&output, (*(nav++)));
 	}
 	va_end(ap);
-	free(output.output);
 	if (stop)
-		return (-1);
-	write(1, output.output, output.size - 1);
+		output.size = -1;
+	else
+		write(1, output.output, output.size - 1);
+	free(output.output);
 	return (output.size);
 }
