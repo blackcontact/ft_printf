@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/04 13:26:42 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 17:39:32 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 17:40:05 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -93,7 +93,6 @@ int				ft_printf_start(const char **nav, va_list ap, t_output *output)
 		free(actual);
 		return (-1);
 	}
-	printf("VALUE = %d\n", (int)actual->value);
 	ft_strstructjoin(actual, output);
 	free(actual->output);
 	free(actual);
