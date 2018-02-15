@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/04 13:15:21 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 15:54:17 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/13 13:48:41 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,6 +44,12 @@
 ** z  -> z
 */
 
+typedef struct	s_output
+{
+	int			size;
+	char		*output;
+}				t_output;
+
 typedef struct	s_conversion
 {
 	char		flags[5];
@@ -54,6 +60,7 @@ typedef struct	s_conversion
 	char		type;
 	void		*value;
 	char		*output;
+	int			size;
 }				t_conversion;
 
 /*
@@ -83,35 +90,51 @@ void			parse_type(const char **nav, t_conversion *result);
 /*
 ** ft_printf_print.c
 */
-void			ft_printf_hex(t_conversion *actual);
-void			ft_printf_oct(t_conversion *actual);
-void			ft_printf_int(t_conversion *actual);
-void			ft_printf_uint(t_conversion *actual);
+char			*ft_printf_hex(t_conversion *actual);
+char			*ft_printf_oct(t_conversion *actual);
+char			*ft_printf_int(t_conversion *actual);
+char			*ft_printf_uint(t_conversion *actual);
 /*
 ** ft_printf_process.c
 */
-char			*ft_nbchar_ba(char c, int i, char *s2, int position);
-int				printf_process_decimal(t_conversion *a);
-int				printf_process_u_decimal(t_conversion *a);
-int				printf_process_modulo(t_conversion *actual);
-int				printf_process_hex(t_conversion *actual);
-int				printf_process_oct(t_conversion *actual);
-int				printf_process_char(t_conversion *actual);
-int				printf_process_string(t_conversion *actual);
+void			ft_nbchar_bef(char c, int i, t_conversion *actual);
+void			ft_nbchar_aft(char c, int i, t_conversion *actual);
+void			printf_process_decimal(t_conversion *a);
+void			printf_process_u_decimal(t_conversion *a);
+void			printf_process_modulo(t_conversion *actual);
+void			printf_process_hex(t_conversion *actual);
+void			printf_process_oct(t_conversion *actual);
+void			printf_process_char(t_conversion *actual);
+void			printf_process_string(t_conversion *actual);
+void			printf_process_wstring(t_conversion *actual);
+void			printf_process_wstring(t_conversion *actual);
+void			printf_process_pointer(t_conversion *actual);
+void			printf_process_unknown(t_conversion *actual);
 /*
 ** ft_printf_struct.c
 */
 void			struct_blank(t_conversion *ret);
-int				parse_verif(t_conversion *result);
+int				parse_false(t_conversion *result);
 t_conversion	*printf_parsing(const char **nav, va_list ap);
 /*
 ** ft_printf.c
 */
-int				printf_process_type(t_conversion *actual);
+void			printf_process_type(t_conversion *actual);
 int				ft_printf(const char *format, ...);
 /*
 ** ft_putwchar.c
 */
-int				ft_putwchar(wchar_t c);
+int				ft_wputchar(wchar_t c);
+void			ft_wputstr(wchar_t *s);
+int				ft_wcharlen(wchar_t c);
+char			*ft_strjoinchar(char const *s1, char const c);
+
+wchar_t			*ft_wstrconvert(const char *s);
+wchar_t			*ft_wstrnew(size_t size);
+
+int				ft_wchartostr(wchar_t c, char *str);
+
+size_t			ft_wstrlen(wchar_t *s);
+
 
 #endif

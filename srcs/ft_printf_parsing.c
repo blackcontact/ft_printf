@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   printf_parsing.c                                 .::    .:/ .      .::   */
+/*   ft_printf_parsing.c                              .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:05:38 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/23 16:46:03 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/13 17:39:33 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -82,17 +82,6 @@ void			parse_length(const char **nav, t_conversion *result)
 
 void			parse_type(const char **nav, t_conversion *result)
 {
-	const char		types[] = TYPES;
-	const char		*test = types;
-
-	while (*test)
-	{
-		if (*test == **nav)
-		{
-			result->type = **nav;
-			(*nav)++;
-			break ;
-		}
-		test++;
-	}
+	result->type = **nav;
+	(*nav)++;
 }

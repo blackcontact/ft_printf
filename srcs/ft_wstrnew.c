@@ -1,37 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   ft_wstrnew.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/01/04 13:16:38 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 13:55:31 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/02/08 17:44:47 by mschneid     #+#   ##    ##    #+#       */
+/*   Updated: 2018/02/08 17:48:32 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "srcs/ft_printf.h"
-#include <stdio.h>
-#include <locale.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <wchar.h>
+#include "ft_printf.h"
 
-int		main(void)
+wchar_t	*ft_wstrnew(size_t size)
 {
-	int		retft;
-	int		ret;
-	wchar_t	test;
+	wchar_t	*output;
 
-	test = WCHAR_MAX;
-
-	//setbuf(stdout, NULL);
-	printf("%x\n", test);
-	setlocale(LC_ALL, "");
-	retft = ft_printf("@MINE=%C\n", test);
-	ret = printf("@REAL=%C\n", test);
-	printf("Real = %d\n", ret);
-	printf("Ft = %d\n", retft);
-	return (0);
+	if (!(output = (wchar_t *)malloc(sizeof(wchar_t) * size + 1)))
+		return (NULL);
+	output = ft_memset(output, 0, size + 1);
+	return (output);
 }

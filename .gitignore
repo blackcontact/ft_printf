@@ -1,0 +1,7 @@
+*.o
+*.dSYM/
+*.out
+ftprintftest/
+.vscode/
+libftprintf.a
+libft/*.o

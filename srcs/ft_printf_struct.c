@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/11 11:05:58 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 16:32:57 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/13 15:25:37 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,14 +22,22 @@ void			struct_blank(t_conversion *ret)
 	ret->type = 0;
 	ret->precision_isset = 0;
 	ret->value = NULL;
+	ret->size = 0;
 	ret->output = NULL;
 }
 
-int				parse_verif(t_conversion *result)
+int				parse_false(t_conversion *result)
 {
-	if (result->type == 0)
-		return (-1);
-	return (0);
+	const char		types[] = TYPES;
+	const char		*test = types;
+
+	while (*test)
+	{
+		if (*test == result->type)
+			return (0);
+		test++;
+	}
+	return (1);
 }
 
 t_conversion	*printf_parsing(const char **nav, va_list ap)
@@ -45,11 +53,8 @@ t_conversion	*printf_parsing(const char **nav, va_list ap)
 	parse_precision(nav, result);
 	parse_length(nav, result);
 	parse_type(nav, result);
-	if (parse_verif(result))
-	{
-		free(result);
-		return (NULL);
-	}
-	result->value = va_arg(ap, void *);
+	//debug(result);
+	if (result->type != '%' && !parse_false(result))
+		result->value = va_arg(ap, void *);
 	return (result);
 }

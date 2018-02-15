@@ -6,7 +6,7 @@
 #    By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/17 15:05:19 by mschneid     #+#   ##    ##    #+#        #
-#    Updated: 2018/01/29 16:00:08 by mschneid    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/02/13 12:55:57 by mschneid    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -35,6 +35,7 @@ SOURCES =	libft/ft_bzero.c\
 			libft/ft_strjoin.c\
 			libft/ft_strcpy.c\
 			libft/ft_toupper.c\
+			libft/ft_isalpha.c\
 			srcs/ft_printf.c\
 			srcs/debug.c\
 			srcs/ft_printf_parsing.c\
@@ -43,16 +44,24 @@ SOURCES =	libft/ft_bzero.c\
 			srcs/ft_printf_print.c\
 			srcs/ft_printf_output.c\
 			srcs/ft_itoa_base.c\
-			srcs/ft_putwchar.c\
+			srcs/ft_wcharlen.c\
+			srcs/ft_wputchar.c\
+			srcs/ft_wputstr.c\
+			srcs/ft_wstrlen.c\
+			srcs/ft_strjoinchar.c\
+			srcs/ft_wstrnew.c\
+			srcs/ft_wstrconvert.c\
+			srcs/ft_wchartostr.c\
+			
 
 OBJECT = $(SOURCES:.c=.o)
 
 all: $(NAME)
 
-%.o: %.c includes/ft_printf.h
+%.o: %.c ft_printf.h
 		@(echo "\033[32m Librairie :[ \033[31m\t\c")
 		@(echo "$@ \033[32m]\033[0m \033[0K")
-		@($(CC) $(CFLAGS) -I includes -c -o $@ $<)
+		@($(CC) $(CFLAGS) -I ./ -c -o $@ $<)
 		@(echo "\033[2F")
 
 $(NAME): $(OBJECT)

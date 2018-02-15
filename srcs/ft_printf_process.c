@@ -6,34 +6,73 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/11 15:10:12 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 16:36:37 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 13:24:10 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char		*ft_nbchar_ba(char c, int i, char *s2, int position)
+void		ft_nbchar_bef(char c, int i, t_conversion *actual)
 {
 	char	*s1;
 	char	*temp;
+	int		j;
+	int		k;
 
 	s1 = ft_strnew(i);
-	while (i--)
-		s1[i] = c;
-	temp = s1;
-	s1 = !position ? ft_strjoin(s1, s2) : ft_strjoin(s2, s1);
-	ft_strdel(&temp);
-	ft_strdel(&s2);
-	return (s1);
+	j = i;
+	while (j--)
+		s1[j] = c;
+	temp = actual->output;
+	actual->output = ft_strnew(i + actual->size);
+	j = 0;
+	while (j < i)
+	{
+		actual->output[j] = s1[j];
+		j++;
+	}
+	k = 0;
+	while (j < i + actual->size)
+		actual->output[j++] = temp[k++];
+	free(temp);
+	free(s1);
 }
 
-int			printf_process_decimal(t_conversion *actual)
+void		ft_nbchar_aft(char c, int i, t_conversion *actual)
+{
+	char	*s1;
+	char	*temp;
+	int		j;
+	int		k;
+
+	s1 = ft_strnew(i);
+	j = i;
+	while (j--)
+		s1[j] = c;
+	temp = actual->output;
+	actual->output = ft_strnew(i + actual->size);
+	j = 0;
+	while (j < actual->size)
+	{
+		actual->output[j] = temp[j];
+		j++;
+	}
+	k = 0;
+	while (j < i + actual->size)
+		actual->output[j++] = s1[k++];
+	free(temp);
+	free(s1);
+}
+
+void		printf_process_decimal(t_conversion *actual)
 {
 	int		neg;
 	char	*temp;
 
-	ft_printf_int(actual);
+	if (actual->type == 'D')
+		actual->length = 'l';
+	actual->output = ft_printf_int(actual);
 	neg = 0;
 	if (actual->output[0] == '-')
 	{
@@ -42,47 +81,50 @@ int			printf_process_decimal(t_conversion *actual)
 		actual->output = ft_strsub(temp, 1, ft_strlen(temp) - 1);
 		free(temp);
 	}
+	actual->size += ft_strlen(actual->output);
 	ft_printf_output_precision(actual, neg);
 	ft_printf_output_sign(actual, neg);
 	ft_printf_output_align(actual);
-	ft_putstr(actual->output);
-	return (ft_strlen(actual->output));
 }
 
-int			printf_process_u_decimal(t_conversion *actual)
+void		printf_process_u_decimal(t_conversion *actual)
 {
 	if (actual->type == 'U')
 		actual->length = 'l';
-	ft_printf_uint(actual);
+	actual->output = ft_printf_uint(actual);
+	actual->size += ft_strlen(actual->output);
 	ft_printf_output_precision(actual, 0);
 	ft_printf_output_align(actual);
-	ft_putstr(actual->output);
-	return (ft_strlen(actual->output));
 }
 
-int			printf_process_modulo(t_conversion *actual)
+void		printf_process_modulo(t_conversion *actual)
 {
-	actual->output = ft_nbchar_ba('%', 1, ft_strnew(0), 0);
-	ft_printf_output_precision(actual, 0);
+	actual->output = ft_strdup("%");
+	actual->size++;
+	if (actual->flags[1] && actual->min_width > actual->size)
+	{
+		ft_nbchar_bef('0', actual->min_width - actual->size, actual);
+		actual->size += actual->min_width - actual->size;
+	}
 	ft_printf_output_align(actual);
-	ft_putstr(actual->output);
-	return (ft_strlen(actual->output));
 }
 
-int			printf_process_hex(t_conversion *actual)
+void		printf_process_hex(t_conversion *actual)
 {
 	int		i;
 	char	*temp;
 	int		zero;
 
 	i = 0;
-	ft_printf_hex(actual);
+	actual->output = ft_printf_hex(actual);
+	actual->size += ft_strlen(actual->output);
 	zero = actual->output[0] == '0' || !actual->output[0] ? 1 : 0;
 	ft_printf_output_precision_hex(actual, zero);
 	if (actual->flags[0] && !zero)
 	{
 		temp = actual->output;
 		actual->output = ft_strjoin("0x", actual->output);
+		actual->size += 2;
 		free(temp);
 	}
 	if (actual->type == 'X')
@@ -92,80 +134,166 @@ int			printf_process_hex(t_conversion *actual)
 			i++;
 		}
 	ft_printf_output_align(actual);
-	ft_putstr(actual->output);
-	return (ft_strlen(actual->output));
 }
 
-int			printf_process_oct(t_conversion *actual)
+void		printf_process_oct(t_conversion *actual)
 {
 	int		i;
 	char	*temp;
 	int		zero;
 
 	i = 0;
-	ft_printf_oct(actual);
+	if (actual->type == 'O')
+		actual->length = 'l';
+	actual->output = ft_printf_oct(actual);
+	if (!actual->output[0] && (!actual->precision_isset || actual->flags[0]))
+		actual->output = ft_strdup("0");
+	actual->size += ft_strlen(actual->output);
 	zero = actual->output[0] == '0' || !actual->output[0] ? 1 : 0;
 	ft_printf_output_precision_hex(actual, zero);
-	if (actual->flags[0])
+	if ((actual->flags[0] && !zero && actual->output[0] != '0'))
 	{
 		temp = actual->output;
 		actual->output = ft_strjoin("0", actual->output);
+		actual->size++;
 		free(temp);
 	}
 	ft_printf_output_align(actual);
-	ft_putstr(actual->output);
-	return (ft_strlen(actual->output));
 }
 
-int			printf_process_char(t_conversion *actual)
+void		printf_process_char(t_conversion *actual)
 {
-	int		length;
-	int		count;
+	int		charlen;
 
-	count = 1;
-	if (!actual->flags[2] && (length = actual->min_width - 1) > 0)
-		while (length--)
-		{
-			ft_putchar(' ');
-			count++;
-		}
-	if (actual->type == 'C' || actual->length == 'l')
-		count += ft_putwchar((wchar_t)actual->value);
+	if ((int)actual->value > 0x10ffff ||
+	((int)actual->value < 0 && actual->type == 'C') ||
+	((int)actual->value <= 0xdfff && (int)actual->value >= 0xbf02))
+	{
+		actual->size = -1;
+		return ;
+	}
+	charlen = ft_wcharlen((wchar_t)actual->value);
+	if (actual->type == 'c' && actual->length != 'l')
+		charlen = 1;
+	actual->output = ft_strnew(charlen);
+	if (actual->type == 'c' && actual->length != 'l')
+		ft_nbchar_bef((wchar_t)actual->value, 1, actual);
 	else
-		ft_putchar((char)actual->value);
-	if (actual->flags[2] && (length = actual->min_width - 1) > 0)
-		while (length--)
-		{
-			ft_putchar(' ');
-			count++;
-		}
-	return (count);
+		ft_wchartostr((wchar_t)actual->value, actual->output);
+	actual->size += charlen;
+	if (actual->flags[1])
+		ft_printf_output_precision(actual, 0);
+	else
+		ft_printf_output_align(actual);
+	if (actual->min_width > actual->size && !actual->flags[0])
+	{
+		ft_nbchar_bef('0', actual->min_width - actual->size, actual);
+		actual->size += actual->min_width - actual->size;
+	}
 }
 
-int			printf_process_string(t_conversion *actual)
+void		printf_process_string(t_conversion *actual)
 {
 	int		max;
-	int		i;
-	char	*value;
 	int		tofree;
+	char	*temp;
+	char	*value;
 
 	if ((tofree = actual->value ? 0 : 1))
 		actual->value = ft_strdup("(null)");
 	value = actual->value;
 	if (actual->precision_isset)
 	{
-		max = (ft_strlen(actual->value) < (size_t)actual->precision ?
-		ft_strlen(actual->value) : actual->precision);
-		actual->output = ft_strnew(max);
-		i = -1;
-		while (++i < max)
-			actual->output[i] = value[i];
+		max = (ft_strlen(actual->value) < (size_t)actual->precision
+		? ft_strlen(actual->value) : actual->precision);
+		temp = actual->output;
+		actual->output = ft_strsub(value, 0, max);
+		free(temp);
 	}
 	else
 		actual->output = ft_strdup(actual->value);
+	actual->size += ft_strlen(actual->output);
+	if (actual->flags[1] && actual->min_width > actual->size)
+	{
+		ft_nbchar_bef('0', actual->min_width - actual->size, actual);
+		actual->size += actual->min_width - actual->size;
+	}
 	ft_printf_output_align(actual);
-	ft_putstr(actual->output);
 	if (tofree)
 		free(actual->value);
-	return (ft_strlen(actual->output));
+}
+
+char		*convert_str(wchar_t *wstr)
+{
+	char	*output;
+	size_t	count;
+
+	if (!(output = (char *)malloc(sizeof(char) * ft_wstrlen(wstr) + 1)))
+		return (NULL);
+	count = 0;
+	while (*wstr)
+		count += ft_wchartostr(*(wstr++), (output + count));
+	output[count] = '\0';
+	return (output);
+}
+
+void		printf_process_wstring(t_conversion *actual)
+{
+	int		tofree;
+	int		i;
+	wchar_t	*value;
+
+	if (actual->precision_isset)
+	{
+		i = 0;
+		value = actual->value;
+		while (i < actual->precision)
+		{
+			if (ft_wcharlen(*value) + i > actual->precision)
+				break ;
+			i += ft_wcharlen(*value);
+		}
+		actual->precision = i;
+	}
+	if ((tofree = actual->value ? 0 : 1))
+		actual->value = ft_strdup("(null)");
+	else
+		actual->value = (convert_str((wchar_t *)actual->value));
+	printf_process_string(actual);
+	free(actual->value);
+}
+
+void		printf_process_pointer(t_conversion *actual)
+{
+	char		*temp;
+
+	if (!(unsigned long long)actual->value && actual->precision_isset)
+		actual->output = ft_strnew(0);
+	else
+		actual->output = ft_uitoa_base((unsigned long long)actual->value, 16);
+	actual->size += ft_strlen(actual->output);
+	if ((actual->size < actual->min_width) && actual->flags[1])
+	{
+		ft_nbchar_aft('0', actual->min_width - actual->size - 2, actual);
+		actual->size += actual->min_width - actual->size - 2;
+	}
+	if (actual->precision_isset && actual->precision > actual->size)
+	{
+		ft_nbchar_bef('0', actual->precision - actual->size, actual);
+		actual->size += actual->precision - actual->size;
+	}
+	temp = actual->output;
+	actual->output = ft_strjoin("0x", actual->output);
+	actual->size += 2;
+	free(temp);
+	ft_printf_output_align(actual);
+}
+
+void		printf_process_unknown(t_conversion *actual)
+{
+	long	test;
+
+	test = actual->type;
+	actual->value = (void *)test;
+	printf_process_char(actual);
 }

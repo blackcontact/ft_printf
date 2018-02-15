@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:01:34 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 16:10:09 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/13 11:54:56 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,8 +16,8 @@
 
 void			debug(t_conversion *test)
 {
-	for (int i = 0; i < 5; i++)
-		fprintf(stderr, "flags[%i] = '%c'\n",i, test->flags[i]);
+	//for (int i = 0; i < 5; i++)
+	//	fprintf(stderr, "flags[%i] = '%c'\n",i, test->flags[i]);
 	fprintf(stderr, "min = '%d'\n", test->min_width);
 	fprintf(stderr, "max = '%d'\n", test->precision);
 	fprintf(stderr, "length = '%c'\n", test->length);
