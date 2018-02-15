@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/04 13:26:42 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 16:20:24 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 16:37:41 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -110,6 +110,7 @@ int				ft_printf(const char *format, ...)
 	stop = 0;
 	output.size = 0;
 	output.output = ft_strnew(0);
+	printf("init=%s\n", nav);
 	va_start(ap, format);
 	while (*nav)
 	{
