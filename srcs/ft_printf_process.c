@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/11 15:10:12 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 13:24:10 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 14:21:16 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -165,9 +165,7 @@ void		printf_process_char(t_conversion *actual)
 {
 	int		charlen;
 
-	if ((int)actual->value > 0x10ffff ||
-	((int)actual->value < 0 && actual->type == 'C') ||
-	((int)actual->value <= 0xdfff && (int)actual->value >= 0xbf02))
+	if ((int)actual->value > 0x10ffff)
 	{
 		actual->size = -1;
 		return ;
