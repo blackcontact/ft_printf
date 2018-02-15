@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/11 15:10:12 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 14:21:16 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 17:59:51 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -165,11 +165,6 @@ void		printf_process_char(t_conversion *actual)
 {
 	int		charlen;
 
-	if ((int)actual->value > 0x10ffff)
-	{
-		actual->size = -1;
-		return ;
-	}
 	charlen = ft_wcharlen((wchar_t)actual->value);
 	if (actual->type == 'c' && actual->length != 'l')
 		charlen = 1;
