@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/04 13:26:42 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/14 18:33:10 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 14:53:39 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -127,5 +127,6 @@ int				ft_printf(const char *format, ...)
 	if (stop)
 		return (-1);
 	write(1, output.output, output.size);
+	printf("\n|||||||%d||||||||\n", output.size);
 	return (output.size);
 }
