@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/04 13:26:42 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 17:40:05 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 17:41:59 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -88,6 +88,7 @@ int				ft_printf_start(const char **nav, va_list ap, t_output *output)
 
 	actual = printf_parsing(nav, ap);
 	printf_process_type(actual);
+	printf("value=|%d|\n", (int)actual->value);
 	if (actual->size == -1)
 	{
 		free(actual);
@@ -109,6 +110,7 @@ int				ft_printf(const char *format, ...)
 	stop = 0;
 	output.size = 0;
 	output.output = ft_strnew(0);
+	printf("s=|%s|\n", nav);
 	va_start(ap, format);
 	while (*nav)
 	{
