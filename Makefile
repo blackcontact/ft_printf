@@ -6,7 +6,7 @@
 #    By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/17 15:05:19 by mschneid     #+#   ##    ##    #+#        #
-#    Updated: 2018/02/19 19:08:18 by mschneid    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/02/20 12:49:38 by mschneid    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -30,6 +30,7 @@ SOURCES =	libft/ft_bzero.c\
 			libft/ft_strnew.c\
 			libft/ft_strsub.c\
 			libft/ft_toupper.c\
+			libft/ft_atoi.c\
 			srcs/ft_printf.c\
 			srcs/ft_printf_parsing.c\
 			srcs/ft_printf_struct.c\

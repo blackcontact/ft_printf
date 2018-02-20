@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/04 13:26:42 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/20 10:29:50 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/19 17:55:05 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,6 +57,31 @@ void			ft_strstructjoin(t_conversion *a, t_output *o)
 	o->output = output;
 }
 
+void			printf_process_type(t_conversion *actual)
+{
+	if (actual->type == 'd' || actual->type == 'i' || actual->type == 'D')
+		printf_process_decimal(actual);
+	else if (actual->type == 'u' || actual->type == 'U')
+		printf_process_u_decimal(actual);
+	else if (actual->type == '%')
+		printf_process_modulo(actual);
+	else if (actual->type == 'c' || actual->type == 'C')
+		printf_process_char(actual);
+	else if (actual->type == 'x' || actual->type == 'X')
+		printf_process_hex(actual);
+	else if (actual->type == 'o' || actual->type == 'O')
+		printf_process_oct(actual);
+	else if (actual->type == 'S' || (actual->type == 's'
+	&& actual->length == 'l'))
+		printf_process_wstring(actual);
+	else if (actual->type == 's')
+		printf_process_string(actual);
+	else if (actual->type == 'p')
+		printf_process_pointer(actual);
+	else
+		printf_process_unknown(actual);
+}
+
 int				ft_printf_start(const char **nav, va_list ap, t_output *output)
 {
 	t_conversion	*actual;
@@ -100,7 +125,7 @@ int				ft_printf(const char *format, ...)
 	{
 		if (*nav == '%')
 		{
-			if ((stop = ft_printf_start(&nav, ap, &output)))
+			if (!*(nav + 1) || (stop = ft_printf_start(&nav, ap, &output)))
 				break ;
 		}
 		else
