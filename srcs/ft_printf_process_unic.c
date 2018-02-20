@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/19 18:26:54 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/19 19:03:56 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/20 10:42:47 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ int			ft_wcharlen(wchar_t c)
 
 int			ft_wchartest(int value, int islong)
 {
-	if (((MB_CUR_MAX == 1 && value > 255)) || ((islong)
+	if (((MB_CUR_MAX == 1 && value > 255 && islong)) || ((islong)
 	&& ((value > 0x10ffff) || (value > 0xd7ff && value < 0xe000)
 	|| (value < 0))))
 		return (-1);
