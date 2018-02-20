@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/04 13:26:42 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/19 19:32:55 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/20 10:21:48 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -91,6 +91,7 @@ int				ft_printf(const char *format, ...)
 	t_output		output;
 	int				stop;
 
+	printf("||%s||\n", nav);
 	stop = 0;
 	output.size = 0;
 	output.output = ft_strnew(0);
@@ -100,7 +101,6 @@ int				ft_printf(const char *format, ...)
 	{
 		if (*nav == '%')
 		{
-//			if (!*(nav + 1) || (stop = ft_printf_start(&nav, ap, &output)))
 			if ((stop = ft_printf_start(&nav, ap, &output)))
 				break ;
 		}
