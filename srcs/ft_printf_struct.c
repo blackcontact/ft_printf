@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/11 11:05:58 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/13 15:25:37 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/19 18:41:15 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,23 +38,4 @@ int				parse_false(t_conversion *result)
 		test++;
 	}
 	return (1);
-}
-
-t_conversion	*printf_parsing(const char **nav, va_list ap)
-{
-	t_conversion	*result;
-
-	if (!(result = malloc(sizeof(t_conversion))))
-		return (NULL);
-	(*nav)++;
-	struct_blank(result);
-	parse_flags(nav, result);
-	parse_minwidth(nav, result);
-	parse_precision(nav, result);
-	parse_length(nav, result);
-	parse_type(nav, result);
-	//debug(result);
-	if (result->type != '%' && !parse_false(result))
-		result->value = va_arg(ap, void *);
-	return (result);
 }

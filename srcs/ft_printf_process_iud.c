@@ -1,67 +1,51 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf_print.c                                .::    .:/ .      .::   */
+/*   ft_printf_process_iud.c                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/01/17 12:53:29 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/13 11:32:15 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/02/19 18:11:53 by mschneid     #+#   ##    ##    #+#       */
+/*   Updated: 2018/02/19 18:50:04 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_printf_hex(t_conversion *actual)
+void		printf_process_decimal(t_conversion *actual)
 {
-	if (((signed int)actual->value) == 0 && actual->precision_isset)
-		return (ft_strnew(0));
-	else
+	int		neg;
+	char	*temp;
+
+	if (actual->type == 'D')
+		actual->length = 'l';
+	actual->output = ft_printf_value_int(actual);
+	neg = 0;
+	if (actual->output[0] == '-')
 	{
-		if (!actual->length)
-			return (ft_uitoa_base((unsigned int)actual->value, 16));
-		else if (actual->length == 'h')
-			return (ft_uitoa_base((int)actual->value, 16));
-		else if (actual->length == 'H')
-			return (ft_uitoa_base((unsigned char)actual->value, 16));
-		else if (actual->length == 'l')
-			return (ft_uitoa_base((signed long)actual->value, 16));
-		else if (actual->length == 'L')
-			return (ft_uitoa_base((signed long long)actual->value, 16));
-		else if (actual->length == 'j')
-			return (ft_uitoa_base((intmax_t)actual->value, 16));
-		else if (actual->length == 'z')
-			return (ft_uitoa_base((size_t)actual->value, 16));
+		neg = 1;
+		temp = actual->output;
+		actual->output = ft_strsub(temp, 1, ft_strlen(temp) - 1);
+		free(temp);
 	}
-	return (NULL);
+	actual->size += ft_strlen(actual->output);
+	ft_printf_output_precision(actual, neg);
+	ft_printf_output_sign(actual, neg);
+	ft_printf_output_align(actual);
 }
 
-char	*ft_printf_oct(t_conversion *actual)
+void		printf_process_u_decimal(t_conversion *actual)
 {
-	if (((signed int)actual->value) == 0 && actual->precision_isset)
-		return (ft_strnew(0));
-	else
-	{
-		if (!actual->length)
-			return (ft_uitoa_base((unsigned int)actual->value, 8));
-		else if (actual->length == 'h')
-			return (ft_uitoa_base((unsigned short)actual->value, 8));
-		else if (actual->length == 'H')
-			return (ft_uitoa_base((unsigned char)actual->value, 8));
-		else if (actual->length == 'l')
-			return (ft_uitoa_base((signed long)actual->value, 8));
-		else if (actual->length == 'L')
-			return (ft_uitoa_base((signed long long)actual->value, 8));
-		else if (actual->length == 'j')
-			return (ft_uitoa_base((intmax_t)actual->value, 8));
-		else if (actual->length == 'z')
-			return (ft_uitoa_base((size_t)actual->value, 8));
-	}
-	return (NULL);
+	if (actual->type == 'U')
+		actual->length = 'l';
+	actual->output = ft_printf_value_uint(actual);
+	actual->size += ft_strlen(actual->output);
+	ft_printf_output_precision(actual, 0);
+	ft_printf_output_align(actual);
 }
 
-char	*ft_printf_int(t_conversion *actual)
+char		*ft_printf_value_int(t_conversion *actual)
 {
 	if (((signed int)actual->value) == 0 && actual->precision_isset)
 		return (ft_strnew(0));
@@ -85,7 +69,7 @@ char	*ft_printf_int(t_conversion *actual)
 	return (NULL);
 }
 
-char	*ft_printf_uint(t_conversion *actual)
+char		*ft_printf_value_uint(t_conversion *actual)
 {
 	if (((signed int)actual->value) == 0 && actual->precision_isset)
 		return (ft_strnew(0));

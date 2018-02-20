@@ -6,14 +6,14 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:05:38 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/13 17:39:33 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/19 19:37:16 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			parse_flags(const char **nav, t_conversion *result)
+static void			parse_flags(const char **nav, t_conversion *result)
 {
 	const char		flags[] = FLAGS;
 	int				i;
@@ -32,7 +32,7 @@ void			parse_flags(const char **nav, t_conversion *result)
 	}
 }
 
-void			parse_minwidth(const char **nav, t_conversion *result)
+static void			parse_minwidth(const char **nav, t_conversion *result)
 {
 	while (ft_isdigit(**nav))
 	{
@@ -41,7 +41,7 @@ void			parse_minwidth(const char **nav, t_conversion *result)
 	}
 }
 
-void			parse_precision(const char **nav, t_conversion *result)
+void				parse_precision(const char **nav, t_conversion *result)
 {
 	if (**nav != '.')
 		return ;
@@ -54,7 +54,7 @@ void			parse_precision(const char **nav, t_conversion *result)
 	}
 }
 
-void			parse_length(const char **nav, t_conversion *result)
+static void			parse_length(const char **nav, t_conversion *result)
 {
 	const char		length[] = LENGTH;
 	const char		*test = length;
@@ -80,8 +80,23 @@ void			parse_length(const char **nav, t_conversion *result)
 	}
 }
 
-void			parse_type(const char **nav, t_conversion *result)
+t_conversion		*printf_parsing(const char **nav, va_list ap)
 {
-	result->type = **nav;
+	t_conversion	*result;
+
+	if (!(result = malloc(sizeof(t_conversion))))
+		return (NULL);
 	(*nav)++;
+	struct_blank(result);
+	parse_flags(nav, result);
+	parse_minwidth(nav, result);
+	parse_precision(nav, result);
+	parse_length(nav, result);
+	parse_flags(nav, result);
+	result->type = **nav;
+	if (**nav)
+		(*nav)++;
+	if (result->type != '%' && !parse_false(result))
+		result->value = va_arg(ap, void *);
+	return (result);
 }

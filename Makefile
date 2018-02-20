@@ -6,7 +6,7 @@
 #    By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/17 15:05:19 by mschneid     #+#   ##    ##    #+#        #
-#    Updated: 2018/02/13 12:55:57 by mschneid    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/02/19 19:08:18 by mschneid    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -22,36 +22,25 @@ SRCDIR =	srcs
 
 SOURCES =	libft/ft_bzero.c\
 			libft/ft_isdigit.c\
+			libft/ft_memdel.c\
 			libft/ft_memset.c\
-			libft/ft_putchar.c\
-			libft/ft_putnbr.c\
-			libft/ft_putstr.c\
-			libft/ft_strlen.c\
-			libft/ft_strsub.c\
-			libft/ft_strcat.c\
 			libft/ft_strdup.c\
-			libft/ft_strdel.c\
-			libft/ft_strnew.c\
 			libft/ft_strjoin.c\
-			libft/ft_strcpy.c\
+			libft/ft_strlen.c\
+			libft/ft_strnew.c\
+			libft/ft_strsub.c\
 			libft/ft_toupper.c\
-			libft/ft_isalpha.c\
 			srcs/ft_printf.c\
-			srcs/debug.c\
 			srcs/ft_printf_parsing.c\
 			srcs/ft_printf_struct.c\
 			srcs/ft_printf_process.c\
-			srcs/ft_printf_print.c\
 			srcs/ft_printf_output.c\
 			srcs/ft_itoa_base.c\
-			srcs/ft_wcharlen.c\
-			srcs/ft_wputchar.c\
-			srcs/ft_wputstr.c\
-			srcs/ft_wstrlen.c\
-			srcs/ft_strjoinchar.c\
-			srcs/ft_wstrnew.c\
-			srcs/ft_wstrconvert.c\
-			srcs/ft_wchartostr.c\
+			srcs/ft_printf_process_iud.c\
+			srcs/ft_printf_process_ho.c\
+			srcs/ft_printf_process_p.c\
+			srcs/ft_printf_process_unic.c\
+			srcs/ft_printf_process_sunis.c\
 			
 
 OBJECT = $(SOURCES:.c=.o)
