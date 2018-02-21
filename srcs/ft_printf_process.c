@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/11 15:10:12 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/21 10:25:07 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/21 14:06:18 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,6 +59,8 @@ void			printf_process_type(t_conversion *actual)
 		printf_process_pointer(actual);
 	else if (actual->type == 'n')
 		printf_process_n(actual);
+	else if (actual->type == 'b')
+		printf_process_b(actual);
 	else
 		printf_process_unknown(actual);
 }

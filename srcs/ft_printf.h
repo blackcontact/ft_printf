@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/15 11:58:37 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/21 10:40:59 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/21 14:07:53 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,11 +19,20 @@
 
 # include "../libft/libft.h"
 
-# define TYPES "sSpdDioOuUxXcC%"
+# define TYPES "sSpdDioOuUxXcC%b"
 # define FLAGS "#0-+ "
 # define LENGTH "hljzL"
 
-# define ERROR "Error Error Error"
+# define C_NONE         "\033[00m"
+# define C_BOLD         "\033[01m"
+# define C_BLACK        "\033[30m"
+# define C_RED          "\033[31m"
+# define C_GREEN        "\033[32m"
+# define C_BROWN        "\033[33m"
+# define C_BLUE         "\033[34m"
+# define C_MAGENTA      "\033[35m"
+# define C_CYAN         "\033[36m"
+# define C_GRAY         "\033[37m"
 
 /*
 ** Flags:
@@ -90,11 +99,13 @@ void			printf_process_string(t_conversion *a);
 void			printf_process_wstring(t_conversion *actual);
 void			printf_process_pointer(t_conversion *actual);
 void			printf_process_n(t_conversion *actual);
+void			printf_process_b(t_conversion *actual);
 void			struct_blank(t_conversion *ret);
 int				parse_false(t_conversion *result);
 t_conversion	*printf_parsing(const char **nav, va_list ap, t_output *output);
 int				ft_wcharlen(wchar_t c);
 int				ft_wchartostr(wchar_t c, char *str);
 int				verify_chars(wchar_t *str, t_conversion *actual);
+void			ft_printf_find_tag(t_output *output, char *tag, char *result);
 
 #endif

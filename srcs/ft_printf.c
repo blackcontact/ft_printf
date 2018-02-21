@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/04 13:26:42 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/21 10:23:54 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/21 13:38:20 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,6 +77,16 @@ int				ft_printf_start(const char **nav, va_list ap, t_output *output)
 
 int				ft_printf_return(t_output *output, int stop)
 {
+	ft_printf_find_tag(output, "{eoc}", C_NONE);
+	ft_printf_find_tag(output, "{bold}", C_BOLD);
+	ft_printf_find_tag(output, "{black}", C_BLACK);
+	ft_printf_find_tag(output, "{red}", C_RED);
+	ft_printf_find_tag(output, "{green}", C_GREEN);
+	ft_printf_find_tag(output, "{brown}", C_BROWN);
+	ft_printf_find_tag(output, "{blue}", C_BLUE);
+	ft_printf_find_tag(output, "{magenta}", C_MAGENTA);
+	ft_printf_find_tag(output, "{cyan}", C_CYAN);
+	ft_printf_find_tag(output, "{gray}", C_GRAY);
 	write(1, output->output, output->lastgood);
 	free(output->output);
 	if (stop)

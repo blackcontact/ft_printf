@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/19 18:21:45 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/21 10:44:07 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/21 14:11:09 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,11 +39,18 @@ void		printf_process_pointer(t_conversion *actual)
 	ft_printf_output_align(actual);
 }
 
-void	printf_process_n(t_conversion *actual)
+void		printf_process_n(t_conversion *actual)
 {
 	int		*value;
 
 	value = actual->value;
 	*value = actual->size;
 	actual->size = 0;
+}
+
+void		printf_process_b(t_conversion *actual)
+{
+	actual->output = ft_itoa_base((int)actual->value, 2);
+	actual->size = ft_strlen(actual->output);
+	ft_printf_output_align(actual);
 }
