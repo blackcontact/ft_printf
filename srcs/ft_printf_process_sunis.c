@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/19 18:32:59 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/19 19:41:20 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/20 14:08:10 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -110,7 +110,7 @@ void			printf_process_wstring(t_conversion *actual)
 	int		i;
 	wchar_t	*value;
 
-	if (actual->precision_isset && MB_CUR_MAX != 1)
+	if (actual->value && actual->precision_isset && MB_CUR_MAX != 1)
 	{
 		i = 0;
 		value = actual->value;

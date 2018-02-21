@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:05:38 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/20 12:50:28 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/21 10:37:32 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -116,7 +116,7 @@ static void		parse_length(const char **nav, t_conversion *result)
 	}
 }
 
-t_conversion	*printf_parsing(const char **nav, va_list ap)
+t_conversion	*printf_parsing(const char **nav, va_list ap, t_output *output)
 {
 	t_conversion	*result;
 
@@ -133,7 +133,9 @@ t_conversion	*printf_parsing(const char **nav, va_list ap)
 	result->type = **nav;
 	if (**nav)
 		(*nav)++;
-	if (result->type != '%' && !parse_false(result))
+	if ((result->type != '%' && !parse_false(result)) || result->type == 'n')
 		result->value = va_arg(ap, void *);
+	if (result->type == 'n')
+		result->size = output->size;
 	return (result);
 }

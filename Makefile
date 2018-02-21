@@ -6,7 +6,7 @@
 #    By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/17 15:05:19 by mschneid     #+#   ##    ##    #+#        #
-#    Updated: 2018/02/20 12:49:38 by mschneid    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/02/20 14:05:08 by mschneid    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -20,18 +20,7 @@ RM = rm -f
 
 SRCDIR =	srcs
 
-SOURCES =	libft/ft_bzero.c\
-			libft/ft_isdigit.c\
-			libft/ft_memdel.c\
-			libft/ft_memset.c\
-			libft/ft_strdup.c\
-			libft/ft_strjoin.c\
-			libft/ft_strlen.c\
-			libft/ft_strnew.c\
-			libft/ft_strsub.c\
-			libft/ft_toupper.c\
-			libft/ft_atoi.c\
-			srcs/ft_printf.c\
+SOURCES =	srcs/ft_printf.c\
 			srcs/ft_printf_parsing.c\
 			srcs/ft_printf_struct.c\
 			srcs/ft_printf_process.c\
@@ -42,6 +31,20 @@ SOURCES =	libft/ft_bzero.c\
 			srcs/ft_printf_process_p.c\
 			srcs/ft_printf_process_unic.c\
 			srcs/ft_printf_process_sunis.c\
+			libft/ft_bzero.c\
+			libft/ft_isdigit.c\
+			libft/ft_memdel.c\
+			libft/ft_memset.c\
+			libft/ft_strdup.c\
+			libft/ft_strjoin.c\
+			libft/ft_strlen.c\
+			libft/ft_strnew.c\
+			libft/ft_strsub.c\
+			libft/ft_toupper.c\
+			libft/ft_atoi.c\
+			libft/ft_putstr.c\
+			libft/ft_putchar.c\
+			
 			
 
 OBJECT = $(SOURCES:.c=.o)

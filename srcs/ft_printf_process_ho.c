@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/19 18:18:29 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/19 18:50:17 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/20 14:24:45 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,7 +18,7 @@ static void	ft_printf_output_precision_hex(t_conversion *a, int zero)
 	int		length;
 	int		prefix;
 
-	prefix = a->flags[0] && !zero ? 2 : 0;
+	prefix = (a->type == 'x' || a->type == 'X') && a->flags[0] && !zero ? 2 : 0;
 	length = a->precision - a->size;
 	if (a->precision_isset && length > 0)
 	{
@@ -94,7 +94,7 @@ char		*ft_printf_value_hex(t_conversion *actual)
 		if (!actual->length)
 			return (ft_uitoa_base((unsigned int)actual->value, 16));
 		else if (actual->length == 'h')
-			return (ft_uitoa_base((int)actual->value, 16));
+			return (ft_uitoa_base((unsigned short)actual->value, 16));
 		else if (actual->length == 'H')
 			return (ft_uitoa_base((unsigned char)actual->value, 16));
 		else if (actual->length == 'l')

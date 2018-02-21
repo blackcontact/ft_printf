@@ -6,7 +6,7 @@
 /*   By: mschneid <mschneid@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/15 11:58:37 by mschneid     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/19 19:40:45 by mschneid    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/21 10:40:59 by mschneid    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,7 @@
 
 # include <stdarg.h>
 # include <stdio.h>
+
 # include "../libft/libft.h"
 
 # define TYPES "sSpdDioOuUxXcC%"
@@ -88,9 +89,10 @@ void			printf_process_char(t_conversion *a);
 void			printf_process_string(t_conversion *a);
 void			printf_process_wstring(t_conversion *actual);
 void			printf_process_pointer(t_conversion *actual);
+void			printf_process_n(t_conversion *actual);
 void			struct_blank(t_conversion *ret);
 int				parse_false(t_conversion *result);
-t_conversion	*printf_parsing(const char **nav, va_list ap);
+t_conversion	*printf_parsing(const char **nav, va_list ap, t_output *output);
 int				ft_wcharlen(wchar_t c);
 int				ft_wchartostr(wchar_t c, char *str);
 int				verify_chars(wchar_t *str, t_conversion *actual);
